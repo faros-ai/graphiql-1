@@ -51,14 +51,9 @@ export class VariableEditor extends React.Component {
     // does not produce an error.
     const CodeMirror = require('codemirror');
     require('codemirror/addon/hint/show-hint');
-    require('codemirror/addon/edit/matchbrackets');
-    require('codemirror/addon/edit/closebrackets');
-    require('codemirror/addon/fold/brace-fold');
     require('codemirror/addon/fold/foldgutter');
-    require('codemirror/addon/lint/lint');
     require('codemirror/addon/search/searchcursor');
     require('codemirror/addon/search/jump-to-line');
-    require('codemirror/addon/dialog/dialog');
     require('codemirror/keymap/sublime');
     require('codemirror-graphql/variables/hint');
     require('codemirror-graphql/variables/lint');
@@ -71,8 +66,6 @@ export class VariableEditor extends React.Component {
       mode: 'graphql-variables',
       theme: this.props.editorTheme || 'graphiql',
       keyMap: 'sublime',
-      autoCloseBrackets: true,
-      matchBrackets: true,
       showCursorWhenSelecting: true,
       readOnly: this.props.readOnly ? 'nocursor' : false,
       foldGutter: {

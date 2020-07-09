@@ -50,7 +50,7 @@ export class GraphiQL extends React.Component {
     fetcher: PropTypes.func.isRequired,
     schema: PropTypes.instanceOf(GraphQLSchema),
     query: PropTypes.string,
-    variables: PropTypes.string,
+    jsonpath: PropTypes.string,
     operationName: PropTypes.string,
     response: PropTypes.string,
     storage: PropTypes.shape({
@@ -62,7 +62,7 @@ export class GraphiQL extends React.Component {
     defaultVariableEditorOpen: PropTypes.bool,
     onCopyQuery: PropTypes.func,
     onEditQuery: PropTypes.func,
-    onEditVariables: PropTypes.func,
+    onEditJsonpath: PropTypes.func,
     onEditOperationName: PropTypes.func,
     onToggleDocs: PropTypes.func,
     getDefaultFieldNames: PropTypes.func,
@@ -99,8 +99,8 @@ export class GraphiQL extends React.Component {
 
     // Determine the initial variables to display.
     const variables =
-      props.variables !== undefined
-        ? props.variables
+      props.jsonpath !== undefined
+        ? props.jsonpath
         : this._storage.get('variables');
 
     // Determine the initial operationName to use.
@@ -390,7 +390,7 @@ export class GraphiQL extends React.Component {
                   className="variable-editor-title"
                   style={{ cursor: variableOpen ? 'row-resize' : 'n-resize' }}
                   onMouseDown={this.handleVariableResizeStart}>
-                  {'Query Variables'}
+                  {'JSONPath'}
                 </div>
                 <VariableEditor
                   ref={n => {
@@ -593,22 +593,9 @@ export class GraphiQL extends React.Component {
 
   _fetchQuery(query, variables, operationName, cb) {
     const fetcher = this.props.fetcher;
-    let jsonVariables = null;
-
-    try {
-      jsonVariables =
-        variables && variables.trim() !== '' ? JSON.parse(variables) : null;
-    } catch (error) {
-      throw new Error(`Variables are invalid JSON: ${error.message}.`);
-    }
-
-    if (typeof jsonVariables !== 'object') {
-      throw new Error('Variables are not a JSON object.');
-    }
-
     const fetch = fetcher({
       query,
-      variables: jsonVariables,
+      variables: null,
       operationName,
     });
 
@@ -818,8 +805,8 @@ export class GraphiQL extends React.Component {
 
   handleEditVariables = value => {
     this.setState({ variables: value });
-    if (this.props.onEditVariables) {
-      this.props.onEditVariables(value);
+    if (this.props.onEditJsonpath) {
+      this.props.onEditJsonpath(value);
     }
   };
 

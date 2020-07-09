@@ -55,15 +55,11 @@ export class VariableEditor extends React.Component {
     require('codemirror/addon/search/searchcursor');
     require('codemirror/addon/search/jump-to-line');
     require('codemirror/keymap/sublime');
-    require('codemirror-graphql/variables/hint');
-    require('codemirror-graphql/variables/lint');
-    require('codemirror-graphql/variables/mode');
 
     this.editor = CodeMirror(this._node, {
       value: this.props.value || '',
       lineNumbers: true,
       tabSize: 2,
-      mode: 'graphql-variables',
       theme: this.props.editorTheme || 'graphiql',
       keyMap: 'sublime',
       showCursorWhenSelecting: true,

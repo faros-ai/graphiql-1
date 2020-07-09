@@ -77,20 +77,9 @@ export class ResultViewer extends React.Component {
       );
     }
 
-    let value = this.props.value || '';
-    if (value && this.props.jsonpath) {
-      try {
-        const raw = JSON.parse(this.props.value);
-        const focused = jsonpath.query(raw, this.props.jsonpath);
-        value = JSON.stringify(focused, null, 2);
-      } catch (err) {
-        console.warn(err);
-      }
-    }
-
     this.viewer = CodeMirror(this._node, {
       lineWrapping: true,
-      value: value,
+      value: this.focusedValue(),
       readOnly: true,
       theme: this.props.editorTheme || 'graphiql',
       mode: 'graphql-results',
@@ -105,11 +94,11 @@ export class ResultViewer extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return this.props.value !== nextProps.value;
+    return this.props.value !== nextProps.value || this.props.jsonpath !== nextProps.jsonpath;
   }
 
   componentDidUpdate() {
-    this.viewer.setValue(this.props.value || '');
+    this.viewer.setValue(this.focusedValue());
   }
 
   componentWillUnmount() {
@@ -125,6 +114,21 @@ export class ResultViewer extends React.Component {
         }}
       />
     );
+  }
+
+  focusedValue() {
+    const value = this.props.value || '';
+    if (!value || !this.props.jsonpath) {
+      return value;
+    }
+    try {
+      const raw = JSON.parse(value);
+      const focused = jsonpath.query(raw.data, this.props.jsonpath);
+      return JSON.stringify({data: focused}, null, 2);
+    } catch (err) {
+      console.warn(err);
+      return value;
+    }
   }
 
   /**

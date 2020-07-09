@@ -1,8 +1,0 @@
-node_modules/
-coverage/
-/*.js
-!babel.config.js
-/utils
-/variables
-/results
-/__tests__

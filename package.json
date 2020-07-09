@@ -1,40 +1,74 @@
 {
+  "name": "graphiql-fork",
   "private": true,
-  "license": "MIT",
-  "workspaces": [
-    "packages/*",
-    "packages/graphiql-examples/*"
+  "version": "0.15.0-rc.0",
+  "description": "An graphical interactive in-browser GraphQL IDE.",
+  "contributors": [
+    "Hyohyeon Jeong <asiandrummer@fb.com>",
+    "Lee Byron <lee@leebyron.com> (http://leebyron.com/)"
   ],
+  "repository": "http://github.com/graphql/graphiql",
+  "homepage": "http://github.com/graphql/graphiql/tree/master/packages/graphiql#readme",
+  "bugs": {
+    "url": "https://github.com/graphql/graphiql/issues?q=issue+label:graphiql"
+  },
+  "license": "MIT",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "graphiql.js",
+    "graphiql.min.js",
+    "graphiql.css",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "bash ./resources/build.sh",
+    "dev": "babel-node --root-mode upward test/server.js"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
+  },
   "browserify-shim": {
     "react": "global:React",
     "react-dom": "global:ReactDOM"
   },
-  "browser": {
-    "copy-to-clipboard": "./node-modules/copy-to-clipboard/index.js"
+  "dependencies": {
+    "codemirror": "^5.47.0",
+    "codemirror-graphql": "^0.11.0",
+    "copy-to-clipboard": "^3.2.0",
+    "markdown-it": "^8.4.0",
+    "regenerator-runtime": "^0.13.3"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
-  "scripts": {
-    "build": "tsc --build && lerna run build --scope codemirror-graphql --scope graphiql --scope graphql-language-service --scope graphql-language-service-server",
-    "test": "yarn run lint && yarn run check && yarn run build && yarn run testonly",
-    "testonly": "jest && lerna run test --scope codemirror-graphql",
-    "t": "yarn run testonly",
-    "lint": "eslint --ext=ts,js,jsx,tsx . || (printf '\\033[33mTry: \\033[7m yarn run lint -- --fix \\033[0m\\n' && exit 1)",
-    "lint:fix": "eslint --ext=ts,js,jsx,tsx . --fix",
-    "lint:check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
-    "check": "flow check --show-all-errors",
-    "prepublish": "node resources/prepublish.js",
-    "pretty": "node resources/pretty.js",
-    "pretty-check": "node resources/pretty.js --check",
-    "version:release": "lerna version",
-    "version:prerelease": "lerna version --conventional-prerelease",
-    "version:graduate": "lerna version --conventional-graduate"
+  "peerDependencies": {
+    "graphql": "^0.12.0 || ^0.13.0 || ^14.0.0",
+    "prop-types": ">=15.5.0",
+    "react": "^15.6.0 || ^16.0.0",
+    "react-dom": "^15.6.0 || ^16.0.0"
   },
   "devDependencies": {
+    "autoprefixer": "9.6.0",
+    "babelify": "10.0.0",
+    "browserify": "16.2.3",
+    "browserify-shim": "3.8.14",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-15": "^1.4.0",
+    "express": "5.0.0-alpha.5",
+    "express-graphql": "0.6.7",
+    "graphql": "^14.5.2",
+    "jest": "^24.8.0",
+    "jsdom": "15.0.0",
+    "postcss-cli": "6.1.2",
+    "prop-types": "15.7.2",
+    "react": "15.6.2",
+    "react-dom": "15.6.2",
+    "react-test-renderer": "15.6.2",
+    "uglify-js": "3.5.11",
+    "uglifyify": "5.0.1",
+    "watchify": "3.11.1",
     "@babel/cli": "7.4.4",
     "@babel/core": "7.4.5",
     "@babel/node": "7.4.5",
@@ -44,6 +78,7 @@
     "@babel/preset-env": "7.4.5",
     "@babel/preset-flow": "7.0.0",
     "@babel/preset-react": "7.0.0",
+    "@babel/preset-typescript": "7.0.0",
     "@babel/register": "^7.4.4",
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
@@ -63,9 +98,7 @@
     "eslint-plugin-react": "7.14.3",
     "fetch-mock": "^6.0.0",
     "flow-bin": "^0.101.0",
-    "graphql": "^14.5.2",
     "husky": "^3.0.5",
-    "jest": "^24.8.0",
     "jest-environment-jsdom": "^24.8.0",
     "jest-environment-jsdom-global": "^1.2.0",
     "lerna": "^3.16.4",

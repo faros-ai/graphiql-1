@@ -5,6 +5,7 @@
  *  LICENSE file in the root directory of this source tree.
  */
 
+import jsonpath from 'jsonpath';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
@@ -397,7 +398,6 @@ export class GraphiQL extends React.Component {
                     this.variableEditorComponent = n;
                   }}
                   value={this.state.variables}
-                  variableToType={this.state.variableToType}
                   onEdit={this.handleEditVariables}
                   onHintInformationRender={this.handleHintInformationRender}
                   onPrettifyQuery={this.handlePrettifyQuery}
@@ -805,6 +805,14 @@ export class GraphiQL extends React.Component {
   };
 
   handleEditVariables = value => {
+    if (value) {
+      try {
+        jsonpath.parse(value);
+      } catch (err) {
+        console.warn(err);
+        return;
+      }
+    }
     this.setState({ variables: value });
     if (this.props.onEditJsonpath) {
       this.props.onEditJsonpath(value);

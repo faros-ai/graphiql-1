@@ -18,7 +18,6 @@ import commonKeys from '../utility/commonKeys';
  *
  * Props:
  *
- *   - variableToType: A mapping of variable name to GraphQLType.
  *   - value: The text of the editor.
  *   - onEdit: A function called when the editor changes, given the edited text.
  *   - readOnly: Turns the editor to read-only mode.
@@ -26,7 +25,6 @@ import commonKeys from '../utility/commonKeys';
  */
 export class VariableEditor extends React.Component {
   static propTypes = {
-    variableToType: PropTypes.object,
     value: PropTypes.string,
     onEdit: PropTypes.func,
     readOnly: PropTypes.bool,
@@ -50,7 +48,6 @@ export class VariableEditor extends React.Component {
     // Lazily require to ensure requiring GraphiQL outside of a Browser context
     // does not produce an error.
     const CodeMirror = require('codemirror');
-    require('codemirror/addon/hint/show-hint');
     require('codemirror/addon/fold/foldgutter');
     require('codemirror/addon/search/searchcursor');
     require('codemirror/addon/search/jump-to-line');
@@ -59,6 +56,7 @@ export class VariableEditor extends React.Component {
     this.editor = CodeMirror(this._node, {
       value: this.props.value || '',
       lineNumbers: true,
+      mode: 'null',
       tabSize: 2,
       theme: this.props.editorTheme || 'graphiql',
       keyMap: 'sublime',
@@ -134,11 +132,6 @@ export class VariableEditor extends React.Component {
     // user-input changes which could otherwise result in an infinite
     // event loop.
     this.ignoreChangeEvent = true;
-    if (this.props.variableToType !== prevProps.variableToType) {
-      this.editor.options.lint.variableToType = this.props.variableToType;
-      this.editor.options.hintOptions.variableToType = this.props.variableToType;
-      CodeMirror.signal(this.editor, 'change', this.editor);
-    }
     if (
       this.props.value !== prevProps.value &&
       this.props.value !== this.cachedValue

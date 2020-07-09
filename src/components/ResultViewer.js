@@ -5,6 +5,7 @@
  *  LICENSE file in the root directory of this source tree.
  */
 
+import jsonpath from 'jsonpath';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
@@ -24,6 +25,7 @@ export class ResultViewer extends React.Component {
   static propTypes = {
     value: PropTypes.string,
     editorTheme: PropTypes.string,
+    jsonpath: PropTypes.string,
     ResultsTooltip: PropTypes.any,
     ImagePreview: PropTypes.any,
   };
@@ -75,9 +77,20 @@ export class ResultViewer extends React.Component {
       );
     }
 
+    let value = this.props.value || '';
+    if (value && this.props.jsonpath) {
+      try {
+        const raw = JSON.parse(this.props.value);
+        const focused = jsonpath.query(raw, this.props.jsonpath);
+        value = JSON.stringify(focused, null, 2);
+      } catch (err) {
+        console.warn(err);
+      }
+    }
+
     this.viewer = CodeMirror(this._node, {
       lineWrapping: true,
-      value: this.props.value || '',
+      value: value,
       readOnly: true,
       theme: this.props.editorTheme || 'graphiql',
       mode: 'graphql-results',

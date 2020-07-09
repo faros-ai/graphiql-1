@@ -71,11 +71,7 @@ export class VariableEditor extends React.Component {
       foldGutter: {
         minFoldSize: 4,
       },
-      lint: {
-        variableToType: this.props.variableToType,
-      },
       hintOptions: {
-        variableToType: this.props.variableToType,
         closeOnUnfocus: false,
         completeSingle: false,
         container: this._node,

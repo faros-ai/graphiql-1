@@ -419,6 +419,7 @@ export class GraphiQL extends React.Component {
                   this.resultComponent = c;
                 }}
                 value={this.state.response}
+                jsonpath={this.state.variables}
                 editorTheme={this.props.editorTheme}
                 ResultsTooltip={this.props.ResultsTooltip}
                 ImagePreview={ImagePreview}

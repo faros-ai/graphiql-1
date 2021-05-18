@@ -34,6 +34,7 @@ import { ToolbarGroup } from './ToolbarGroup';
 import { ToolbarMenu, ToolbarMenuItem } from './ToolbarMenu';
 import { QueryEditor } from './QueryEditor';
 import { VariableEditor } from './VariableEditor';
+import { JsonataEditor } from './JsonataEditor';
 import { HeaderEditor } from './HeaderEditor';
 import { ResultViewer } from './ResultViewer';
 import { DocExplorer } from './DocExplorer';
@@ -187,7 +188,7 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
   graphiqlContainer: Maybe<HTMLDivElement>;
   resultComponent: Maybe<ResultViewer>;
   variableEditorComponent: Maybe<VariableEditor>;
-  jsonataEditorComponent: Maybe<VariableEditor>;
+  jsonataEditorComponent: Maybe<JsonataEditor>;
   headerEditorComponent: Maybe<HeaderEditor>;
   _queryHistory: Maybe<QueryHistory>;
   editorBarComponent: Maybe<HTMLDivElement>;
@@ -640,12 +641,11 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
                   readOnly={this.props.readOnly}
                   active={this.state.variableEditorActive}
                 />
-                <VariableEditor
+                <JsonataEditor
                   ref={n => {
                     this.jsonataEditorComponent = n;
                   }}
                   value={this.state.jsonata}
-                  variableToType={this.state.variableToType}
                   onEdit={this.handleEditVariables}
                   onHintInformationRender={this.handleHintInformationRender}
                   onPrettifyQuery={this.handlePrettifyQuery}

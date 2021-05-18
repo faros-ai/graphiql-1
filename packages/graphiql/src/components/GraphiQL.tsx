@@ -140,6 +140,7 @@ export type GraphiQLState = {
   secondaryEditorOpen: boolean;
   secondaryEditorHeight: number;
   variableEditorActive: boolean;
+  jsonataEditorActive: boolean;
   headerEditorActive: boolean;
   headerEditorEnabled: boolean;
   shouldPersistHeaders: boolean;
@@ -186,6 +187,7 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
   graphiqlContainer: Maybe<HTMLDivElement>;
   resultComponent: Maybe<ResultViewer>;
   variableEditorComponent: Maybe<VariableEditor>;
+  jsonataEditorComponent: Maybe<VariableEditor>;
   headerEditorComponent: Maybe<HeaderEditor>;
   _queryHistory: Maybe<QueryHistory>;
   editorBarComponent: Maybe<HTMLDivElement>;
@@ -286,6 +288,7 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
         props.headerEditorEnabled
           ? this._storage.get('headerEditorActive') !== 'true'
           : true,
+      jsonataEditorActive: this._storage.get('jsonataEditorActive') === 'true',
       headerEditorActive: this._storage.get('headerEditorActive') === 'true',
       headerEditorEnabled,
       shouldPersistHeaders,
@@ -416,6 +419,7 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
     this.codeMirrorSizer.updateSizes([
       this.queryEditorComponent,
       this.variableEditorComponent,
+      this.jsonataEditorComponent,
       this.headerEditorComponent,
       this.resultComponent,
     ]);
@@ -575,6 +579,8 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
                 aria-label={
                   this.state.variableEditorActive
                     ? 'Query Variables'
+                    : this.state.jsonataEditorActive
+                    ? 'JSONata'
                     : 'Request Headers'
                 }>
                 <div
@@ -593,6 +599,17 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
                     onClick={this.handleOpenVariableEditorTab}
                     onMouseDown={this.handleTabClickPropogation}>
                     {'Query Variables'}
+                  </div>
+                  <div
+                    style={{
+                      cursor: 'pointer',
+                      color: this.state.jsonataEditorActive ? '#000' : 'gray',
+                      display: 'inline-block',
+                      marginLeft: '20px',
+                    }}
+                    onClick={this.handleOpenJsonataEditorTab}
+                    onMouseDown={this.handleTabClickPropogation}>
+                    {'JSONata'}
                   </div>
                   {this.state.headerEditorEnabled && (
                     <div
@@ -625,18 +642,18 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
                 />
                 <VariableEditor
                   ref={n => {
-                    this.variableEditorComponent = n;
+                    this.jsonataEditorComponent = n;
                   }}
                   value={this.state.jsonata}
                   variableToType={this.state.variableToType}
-                  onEdit={this.handleEditJsonata}
+                  onEdit={this.handleEditVariables}
                   onHintInformationRender={this.handleHintInformationRender}
                   onPrettifyQuery={this.handlePrettifyQuery}
                   onMergeQuery={this.handleMergeQuery}
                   onRunQuery={this.handleEditorRunQuery}
                   editorTheme={this.props.editorTheme}
                   readOnly={this.props.readOnly}
-                  active={this.state.variableEditorActive}
+                  active={this.state.jsonataEditorActive}
                 />
                 {this.state.headerEditorEnabled && (
                   <HeaderEditor
@@ -752,6 +769,18 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
   }
 
   /**
+   * Get the JSONata editor CodeMirror instance.
+   *
+   * @public
+   */
+  public getJsonataEditor() {
+    if (this.jsonataEditorComponent) {
+      return this.jsonataEditorComponent.getCodeMirror();
+    }
+    return null;
+  }
+
+  /**
    * Get the header editor CodeMirror instance.
    *
    * @public
@@ -774,6 +803,9 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
     }
     if (this.variableEditorComponent) {
       this.variableEditorComponent.getCodeMirror().refresh();
+    }
+    if (this.jsonataEditorComponent) {
+      this.jsonataEditorComponent.getCodeMirror().refresh();
     }
     if (this.headerEditorComponent) {
       this.headerEditorComponent.getCodeMirror().refresh();
@@ -919,7 +951,6 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
   private async _fetchQuery(
     query: string,
     variables: string,
-    jsonata: string,
     headers: string,
     operationName: string,
     shouldPersistHeaders: boolean,
@@ -1114,7 +1145,6 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
       const subscription = await this._fetchQuery(
         editedQuery as string,
         variables as string,
-        jsonata as string,
         headers as string,
         operationName as string,
         shouldPersistHeaders as boolean,
@@ -1629,6 +1659,7 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
     this.setState({
       headerEditorActive: true,
       variableEditorActive: false,
+      jsonataEditorActive: false,
       secondaryEditorOpen: true,
     });
   };
@@ -1639,6 +1670,18 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
     this.setState({
       headerEditorActive: false,
       variableEditorActive: true,
+      jsonataEditorActive: false,
+      secondaryEditorOpen: true,
+    });
+  };
+
+  private handleOpenJsonataEditorTab: MouseEventHandler<
+    HTMLDivElement
+  > = _clickEvent => {
+    this.setState({
+      headerEditorActive: false,
+      variableEditorActive: false,
+      jsonataEditorActive: true,
       secondaryEditorOpen: true,
     });
   };

@@ -62,6 +62,7 @@ const shouldSaveQuery = (
 type QueryHistoryProps = {
   query?: string;
   variables?: string;
+  jsonata?: string;
   headers?: string;
   operationName?: string;
   queryID?: number;
@@ -123,6 +124,7 @@ export class QueryHistory extends React.Component<
   updateHistory = (
     query?: string,
     variables?: string,
+    jsonata?: string,
     headers?: string,
     operationName?: string,
   ) => {

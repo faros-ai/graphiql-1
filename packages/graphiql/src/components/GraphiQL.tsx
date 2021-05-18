@@ -100,6 +100,7 @@ export type GraphiQLProps = {
   validationRules?: ValidationRule[];
   query?: string;
   variables?: string;
+  jsonata?: string;
   headers?: string;
   operationName?: string;
   response?: string;
@@ -113,6 +114,7 @@ export type GraphiQLProps = {
   onCopyQuery?: (query?: string) => void;
   onEditQuery?: (query?: string, documentAST?: DocumentNode) => void;
   onEditVariables?: (value: string) => void;
+  onEditJsonata?: (value: string) => void;
   onEditHeaders?: (value: string) => void;
   onEditOperationName?: (operationName: string) => void;
   onToggleDocs?: (docExplorerOpen: boolean) => void;
@@ -129,6 +131,7 @@ export type GraphiQLState = {
   schema?: GraphQLSchema;
   query?: string;
   variables?: string;
+  jsonata?: string;
   headers?: string;
   operationName?: string;
   docExplorerOpen: boolean;
@@ -221,6 +224,12 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
         ? props.variables
         : this._storage.get('variables');
 
+    // Determine the initial jsonata to display.
+    const jsonata =
+      props.jsonata !== undefined
+        ? props.jsonata
+        : this._storage.get('jsonata');
+
     // Determine the initial headers to display.
     const headers =
       props.headers !== undefined
@@ -252,7 +261,7 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
     } else if (props.defaultSecondaryEditorOpen !== undefined) {
       secondaryEditorOpen = props.defaultSecondaryEditorOpen;
     } else {
-      secondaryEditorOpen = Boolean(variables || headers);
+      secondaryEditorOpen = Boolean(variables || jsonata || headers);
     }
 
     const headerEditorEnabled = props.headerEditorEnabled ?? false;
@@ -263,6 +272,7 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
       schema: props.schema,
       query,
       variables: variables as string,
+      jsonata: jsonata as string,
       headers: headers as string,
       operationName,
       docExplorerOpen,
@@ -313,6 +323,7 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
     let nextSchema = this.state.schema;
     let nextQuery = this.state.query;
     let nextVariables = this.state.variables;
+    let nextJsonata = this.state.jsonata;
     let nextHeaders = this.state.headers;
     let nextOperationName = this.state.operationName;
     let nextResponse = this.state.response;
@@ -328,6 +339,12 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
       this.props.variables !== nextProps.variables
     ) {
       nextVariables = nextProps.variables;
+    }
+    if (
+      nextProps.jsonata !== undefined &&
+      this.props.jsonata !== nextProps.jsonata
+    ) {
+      nextJsonata = nextProps.jsonata;
     }
     if (
       nextProps.headers !== undefined &&
@@ -376,6 +393,7 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
         schema: nextSchema,
         query: nextQuery,
         variables: nextVariables,
+        jsonata: nextJsonata,
         headers: nextHeaders,
         operationName: nextOperationName,
         response: nextResponse,
@@ -491,6 +509,7 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
               operationName={this.state.operationName}
               query={this.state.query}
               variables={this.state.variables}
+              jsonata={this.state.jsonata}
               onSelectQuery={this.handleSelectHistoryQuery}
               storage={this._storage}
               queryID={this._editorQueryID}>
@@ -596,6 +615,21 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
                   value={this.state.variables}
                   variableToType={this.state.variableToType}
                   onEdit={this.handleEditVariables}
+                  onHintInformationRender={this.handleHintInformationRender}
+                  onPrettifyQuery={this.handlePrettifyQuery}
+                  onMergeQuery={this.handleMergeQuery}
+                  onRunQuery={this.handleEditorRunQuery}
+                  editorTheme={this.props.editorTheme}
+                  readOnly={this.props.readOnly}
+                  active={this.state.variableEditorActive}
+                />
+                <VariableEditor
+                  ref={n => {
+                    this.variableEditorComponent = n;
+                  }}
+                  value={this.state.jsonata}
+                  variableToType={this.state.variableToType}
+                  onEdit={this.handleEditJsonata}
                   onHintInformationRender={this.handleHintInformationRender}
                   onPrettifyQuery={this.handlePrettifyQuery}
                   onMergeQuery={this.handleMergeQuery}
@@ -885,6 +919,7 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
   private async _fetchQuery(
     query: string,
     variables: string,
+    jsonata: string,
     headers: string,
     operationName: string,
     shouldPersistHeaders: boolean,
@@ -1042,6 +1077,7 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
     // the current query from the editor.
     const editedQuery = this.autoCompleteLeafs() || this.state.query;
     const variables = this.state.variables;
+    const jsonata = this.state.jsonata;
     const headers = this.state.headers;
     const shouldPersistHeaders = this.state.shouldPersistHeaders;
     let operationName = this.state.operationName;
@@ -1065,6 +1101,7 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
         this._queryHistory.updateHistory(
           editedQuery,
           variables,
+          jsonata,
           headers,
           operationName,
         );
@@ -1077,6 +1114,7 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
       const subscription = await this._fetchQuery(
         editedQuery as string,
         variables as string,
+        jsonata as string,
         headers as string,
         operationName as string,
         shouldPersistHeaders as boolean,
@@ -1324,6 +1362,14 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
     }
   };
 
+  handleEditJsonata = (value: string) => {
+    this.setState({ jsonata: value });
+    debounce(500, () => this._storage.set('jsonata', value))();
+    if (this.props.onEditJsonata) {
+      this.props.onEditJsonata(value);
+    }
+  };
+
   handleEditHeaders = (value: string) => {
     this.setState({ headers: value });
     this.props.shouldPersistHeaders &&
@@ -1411,6 +1457,7 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
   handleSelectHistoryQuery = (
     query?: string,
     variables?: string,
+    jsonata?: string,
     headers?: string,
     operationName?: string,
   ) => {
@@ -1419,6 +1466,9 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
     }
     if (variables) {
       this.handleEditVariables(variables);
+    }
+    if (jsonata) {
+      this.handleEditJsonata(jsonata);
     }
     if (headers) {
       this.handleEditHeaders(headers);

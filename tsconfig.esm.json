@@ -1,5 +1,5 @@
 {
-  "extends": "../../resources/tsconfig.base.esm.json",
+  "extends": "./resources/tsconfig.base.esm.json",
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./esm",
@@ -18,19 +18,5 @@
     "**/*-test.js",
     "**/*.stories.js",
     "**/*.stories.ts"
-  ],
-  "references": [
-    {
-      "path": "../codemirror-graphql"
-    },
-    {
-      "path": "../graphiql-toolkit"
-    },
-    {
-      "path": "../graphql-language-service"
-    },
-    {
-      "path": "../graphql-language-service-interface"
-    }
   ]
 }

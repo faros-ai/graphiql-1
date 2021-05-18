@@ -1,216 +1,262 @@
-<!-- @format -->
+# GraphiQL
 
-# GraphQL IDE Monorepo
+> **Breaking Changes & Improvements:** several interfaces are being dropped for new ones for GraphiQL 2.0.0! Read more in [this issue](https://github.com/graphql/graphiql/issues/1165)
 
-> **Note:** The primary maintainer @acao is on hiatus until December 2020
-> **Looking for the [GraphiQL Docs?](packages/graphiql/README.md)**: This is the root of the monorepo! The full GraphiQL docs are located at [`packages/graphiql`](packages/graphiql)
+> **[`graphiql@1.0.0`](https://github.com/graphql/graphiql/milestone/3)** is coming soon & will provide a stable release with react 16, graphql 15 support, fixes, and a headers tab
 
-[![Build Status](https://github.com/graphql/graphiql/workflows/Node.JS%20CI/badge.svg)](https://github.com/graphql/graphiql/actions?query=workflow%3A%22Node.JS+CI%22)
-[![Discord](https://img.shields.io/discord/586999333447270440.svg)](https://discord.gg/fHje6QG)
-[![Code Coverage](https://img.shields.io/codecov/c/github/graphql/graphiql)](https://codecov.io/gh/graphql/graphiql)
-![GitHub top language](https://img.shields.io/github/languages/top/graphql/graphiql)
-![GitHub language count](https://img.shields.io/github/languages/count/graphql/graphiql)
-[![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/graphql/graphiql)](https://snyk.io/test/github/graphql/graphiql)
-![LGTM Grade](https://img.shields.io/lgtm/grade/javascript/github/graphql/graphiql)
-![LGTM Alerts](https://img.shields.io/lgtm/alerts/github/graphql/graphiql)
-[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/3887/badge)](https://bestpractices.coreinfrastructure.org/projects/3887)
+> **[`graphiql@2.0.0-beta`](https://github.com/graphql/graphiql/issues/983)** is a much larger ongoing effort that introduces plugins, i18n, and so many more features after a substantial rewrite using modern react.
 
-## Overview
-
-GraphiQL is the reference implementation of this monorepo, GraphQL IDE, an official project under the GraphQL Foundation. The code uses the permissive MIT license.
-
-Whether you want a simple GraphiQL IDE instance for your server, or a more advanced web or desktop GraphQL IDE experience for your framework or plugin, or you want to build an IDE extension or plugin, you've come to the right place!
-
-The purpose of this monorepo is to give the GraphQL Community:
-
-- a to-specification official language service (see: [API Docs](https://graphiql-test.netlify.app/typedoc))
-- a comprehensive LSP server and CLI service for use with IDEs
-- a codemirror mode
-- a monaco mode (in the works)
-- an example of how to use this ecosystem with GraphiQL.
-- examples of how to implement or extend GraphiQL.
-
-### Latest Stable Ecosystem
-
-`graphiql@1.0.x` and ecosystem are organized as below. Any further changes to `graphiql@1.0.x` are made against `1.0.0` branch
-
-![Diagram of the current Monorepo and third party ecosystem](https://raw.githubusercontent.com/graphql/graphiql/main/resources/images/current-ecosystem.jpg)
-
-### Proposed Ecosystem
-
-As we re-write for `graphiql@2.x` ecosystem, this monorepo will contain an sdk and plugins.
-
-![Diagram of the proposed Monorepo and third party ecosystem](https://raw.githubusercontent.com/graphql/graphiql/main/resources/images/proposed-ecosystem.jpg)
-
-## [GraphiQL](packages/graphiql#readme)
-
-> **Breaking Changes & Improvements:** several interfaces are being dropped for new ones are arriving for GraphiQL 1.0.0! Read more in [this issue](https://github.com/graphql/graphiql/issues/1165)
-
-<!-- prettier-ignore -->
-> [![NPM](https://img.shields.io/npm/v/graphiql.svg)](https://npmjs.com/graphiql)
-> ![jsDelivr hits (npm)](https://img.shields.io/jsdelivr/npm/hm/graphiql)
-> ![npm downloads](https://img.shields.io/npm/dm/graphiql?label=npm%20downloads)
-> ![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/graphiql)
-> ![npm bundle size (version)](https://img.shields.io/bundlephobia/min/graphiql/latest)
-> ![npm bundle size (version)](https://img.shields.io/bundlephobia/minzip/graphiql/latest)
-
-![Screenshot of GraphiQL with Doc Explorer Open](https://raw.githubusercontent.com/graphql/graphiql/main/packages/graphiql/resources/graphiql.jpg)
-
-_/ˈɡrafək(ə)l/_ A graphical interactive in-browser GraphQL IDE. [Try the live demo](http://graphql.org/swapi-graphql). We also have [a demo using our latest netlify build](http://graphiql-test.netlify.com) for the `main` branch.
-
-The GraphiQL IDE, implemented in React, currently using [GraphQL mode for CodeMirror](packages/codemirror-graphql#readme) & [GraphQL Language Service](packages/graphql-language-service#readme).
-
-**Learn more about [GraphiQL in `packages/graphiql/README.md`](packages/graphiql#readme)**
-
-### How To Setup/Implement GraphiQL
-
-[![Edit graphiql-example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/graphiql-js-next-example-qsh7h?file=/src/index.js)
-
-**The [GraphiQL Readme](packages/graphiql#readme) explains** some of the ways to implement GraphiQL, and we also have the [examples](examples) directory as well!
-
-## [Monaco GraphQL](packages/monaco-graphql#readme)
-
-[![NPM](https://img.shields.io/npm/v/monaco-graphql.svg)](https://npmjs.com/monaco-graphql)
+[![NPM](https://img.shields.io/npm/v/graphiql.svg)](https://npmjs.com/graphiql)
 ![jsDelivr hits (npm)](https://img.shields.io/jsdelivr/npm/hm/graphiql)
-![npm downloads](https://img.shields.io/npm/dm/monaco-graphql?label=npm%20downloads)
-![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/monaco-graphql)
+![npm downloads](https://img.shields.io/npm/dm/graphiql?label=npm%20downloads)
+![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/graphiql)
+![npm bundle size (version)](https://img.shields.io/bundlephobia/min/graphiql/latest)
+![npm bundle size (version)](https://img.shields.io/bundlephobia/minzip/graphiql/latest)
+[![License](https://img.shields.io/npm/l/graphiql.svg?style=flat-square)](LICENSE)
 
-Provides monaco editor with a powerful, schema-driven graphql language mode.
+_/ˈɡrafək(ə)l/_ A graphical interactive in-browser GraphQL IDE. [Try the live demo](http://graphql.org/swapi-graphql).
 
-See the [webpack example](examples/monaco-graphql-webpack#readme) for a plain javascript demo using github API
+[![](https://raw.githubusercontent.com/graphql/graphiql/master/packages/graphiql/resources/graphiql.jpg)](http://graphql.org/swapi-graphql)
 
-## [CodeMirror GraphQL](packages/codemirror-graphql#readme)
+## Features
 
-[![NPM](https://img.shields.io/npm/v/codemirror-graphql.svg)](https://npmjs.com/codemirror-graphql)
-![jsDelivr hits (npm)](https://img.shields.io/jsdelivr/npm/hm/graphiql)
-![npm downloads](https://img.shields.io/npm/dm/codemirror-graphql?label=npm%20downloads)
-![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/codemirror-graphql)
+- Syntax highlighting.
+- Intelligent type ahead of fields, arguments, types, and more.
+- Real-time error highlighting and reporting for queries and variables.
+- Automatic query and variables completion.
+- Automatically adds required fields to queries.
+- Documentation explorer, search, with markdown support.
+- Query History using local storage
+- Run and inspect query results using _any_ promise that resolves JSON results. HTTPS or WSS not required.
+- Supports full [GraphQL Language Specification](https://github.com/graphql/graphql-wg):
+  - Queries, Mutations, Subscriptions, Fragments, Unions, directives, multiple operations per query, etc
 
-![Animated Codemirror GraphQL Completion Example](https://raw.githubusercontent.com/graphql/graphiql/main/packages/codemirror-graphql/resources/example.gif)
+## Live Demos
 
-Provides CodeMirror with a parser mode for GraphQL along with a live linter and typeahead hinter powered by your GraphQL Schema
+We have a few demos of `master` branch via the default netlify build (the same URL paths apply to deploy previews on PRs):
 
-## [GraphQL Language Service](packages/graphql-language-service#readme)
+1. [`graphiql.min.js` demo](https://graphiql-test.netlify.com/) - the min.js bundle for the current ref
+2. [`graphiql.js` demo](https://graphiql-test.netlify.com/dev) - development build is nice for react inspector, debugging, etc
+3. [bundle analyzer for graphiql.min.js](https://graphiql-test.netlify.com/analyzer)
 
-[![NPM](https://img.shields.io/npm/v/graphql-language-service.svg)](https://npmjs.com/graphql-language-service)
-![npm downloads](https://img.shields.io/npm/dm/graphql-language-service?label=npm%20downloads)
-![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/codemirror-graphql)
+## Examples
 
-Provides a command-line interface for running [GraphQL Language Service Server](packages/graphql-language-service-server#readme) for various IDEs.
+- [`Unpkg (CDN)`](../../examples/graphiql-cdn/) - a single html file using cdn assets and a script tag
+- [`Webpack`](../../examples/graphiql-webpack/) - a starter for webpack
+- [`Create React App`](../../examples/graphiql-create-react-app) - an example using [Create React App](https://create-react-app.dev/)
+- [`Parcel`](../../examples/graphiql-parcel) - an example using [Parcel](https://parceljs.org/)
+- `Rollup` - TODO
 
-## [GraphQL Language Service Server](packages/graphql-language-service-server#readme)
+## Getting started
 
-[![NPM](https://img.shields.io/npm/v/graphql-language-service.svg)](https://npmjs.com/graphql-language-service)
-![npm downloads](https://img.shields.io/npm/dm/graphql-language-service-server?label=npm%20downloads)
-![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/codemirror-graphql)
+### Modules
 
-An almost fully LSP compliant server process backing the [GraphQL Language Service](packages/graphql-language-service#readme).
+You can use the `graphiql` module, however bear in mind that `react` `react-dom` and `graphql` will all need to be present already for it to work, as they are `peerDependencies`
 
-## [GraphQL Language Service Interface](packages/graphql-language-service-interface#readme)
-
-[![NPM](https://img.shields.io/npm/v/graphql-language-service-interface.svg)](https://npmjs.com/graphql-language-service-interface)
-![jsDelivr hits (npm)](https://img.shields.io/jsdelivr/npm/hm/graphql-language-service-interface)
-![npm downloads](https://img.shields.io/npm/dm/graphql-language-service-interface?label=npm%20downloads)
-![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/codemirror-graphql)
-
-Runtime agnostic Language Service used by [GraphQL mode for CodeMirror](packages/codemirror-graphql#readme) and [GraphQL Language Service Server](packages/graphql-language-service-server#readme)
-
-## [GraphQL Language Service Parser](packages/graphql-language-service-parser#readme)
-
-[![NPM](https://img.shields.io/npm/v/graphql-language-service-parser.svg)](https://npmjs.com/graphql-language-service-parser)
-![npm downloads](https://img.shields.io/npm/dm/graphql-language-service-parser?label=npm%20downloads)
-![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/codemirror-graphql)
-
-An online immutable parser for [GraphQL](http://graphql.org/), designed to be used as part of syntax-highlighting and code intelligence tools such as for the [GraphQL Language Service](packages/graphql-language-service#readme) and [codemirror-graphql](packages/codemirror-graphql#readme).
-
-## [GraphQL Language Service Types](packages/graphql-language-service-types#readme)
-
-[![NPM](https://img.shields.io/npm/v/graphql-language-service-types.svg)](https://npmjs.com/graphql-language-service-types)
-![npm downloads](https://img.shields.io/npm/dm/graphql-language-service-types?label=npm%20downloads)
-
-[Flow](https://flowtype.org/) and Typescript type definitions for the [GraphQL Language Service](packages/graphql-language-service#readme).
-
-## [GraphQL Language Service Utilities](packages/graphql-language-service-utils#readme)
-
-[![NPM](https://img.shields.io/npm/v/graphql-language-service-utils.svg)](https://npmjs.com/graphql-language-service-utils)
-![npm downloads](https://img.shields.io/npm/dm/graphql-language-service-parser?label=npm%20downloads)
-![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/codemirror-graphql)
-
-Utilities to support the [GraphQL Language Service](packages/graphql-language-service#readme).
-
-## Browser & Runtime Support
-
-Many of these packages need to work in multiple environments.
-
-By default, all typescript packages target `es6`.
-
-`graphql-language-service-server` and `graphql-language-service-cli` are made for the node runtime, so they target `es2017`
-
-`codemirror-graphql` and the `graphiql` browser bundle use the [`.browserslistrc`](./.browserlistrc), which targets modern browsers to keep bundle size small and keep the language services performant where async/await is used, and especially to avoid the requirement of `rengenerator-runtime` or special babel configuration.
-
-### [`.browserslistrc`](./.browserlistrc):
+With `npm`:
 
 ```
-last 2 versions
-Firefox ESR
-not dead
-not IE 11
-not ios 10
-maintained node versions
+npm install --save graphiql react react-dom graphql
 ```
 
-To be clear, we do _not_ support Internet Explorer or older versions of evergreen browsers.
+Alternatively, if you are using [`yarn`](https://yarnpkg.com/):
 
-## Development
+```
+yarn add graphiql react react-dom graphql
+```
 
-To get setup for local development of this monorepo, refer to [DEVELOPMENT.md](./DEVELOPMENT.md)
+### UMD
 
-# Contributing to this repo
+With `unpkg`/`jsdelivr`, etc:
 
-This is an open source project, and we welcome contributions. Please see
-[CONTRIBUTING.md](CONTRIBUTING.md) for details on how to contribute.
+```html
+<link href="https://unpkg.com/graphiql/graphiql.min.css" rel="stylesheet" />
+<script crossorigin src="https://unpkg.com/graphiql/graphiql.min.js"></script>
+```
 
-This repository is managed by EasyCLA. Project participants must sign the free [GraphQL Specification Membership agreement](https://preview-spec-membership.graphql.org) before making a contribution. You only need to do this one time, and it can be signed by [individual contributors](http://individual-spec-membership.graphql.org/) or their [employers](http://corporate-spec-membership.graphql.org/).
+(see: Usage UMD Bundle below for more required script tags)
 
-To initiate the signature process please open a PR against this repo. The EasyCLA bot will block the merge if we still need a membership agreement from you.
+## Usage
 
-Please note that EasyCLA is configured to accept commits from certain GitHub bots. These are approved on an exception basis once we are confident that any content they create is either generated by the bot itself or written by someone who has already signed the CLA (e.g., a project maintainer).
+Build for the web with [webpack](https://webpack.js.org/) or [browserify](http://browserify.org/), or use the pre-bundled `graphiql.js` file. See the [cdn example](../examples/graphiql-cdn/) in the git repository to see how to use the pre-bundled file, or see the [webpack example](../examples/graphiql-webpack) to see how to bundle an application using the `GraphiQL` component.
 
-Please note that EasyCLA is configured to accept commits from certain GitHub bots. These are approved on an exception basis once we are confident that any content they create is either unlikely to consist of copyrightable content or else was written by someone who has already signed the CLA (e.g., a project maintainer). The bots that have currently been approved as exceptions are:
+### Usage: NPM module
 
-- github-actions (exclusively for the `changesets` Action)
+**Note**: If you are having webpack issues or questions about webpack, make sure you've cross-referenced your webpack configuration with our own [webpack example](../examples/graphiql-webpack) first. f you are having webpack issues or questions about webpack, make sure you've cross-referenced your webpack configuration with our own [webpack example](../examples/graphiql-webpack) first. We now have tests in CI that ensure this always builds, and we ensure it works end-to-end with every publish.
 
-You can find [detailed information here](https://github.com/graphql/graphql-wg/tree/main/membership). If you have issues, please email [operations@graphql.org](mailto:operations@graphql.org).
+Using another GraphQL service? Here's how to get GraphiQL set up:
 
-## Maintainers
+GraphiQL provides a React component responsible for rendering the UI, which should be provided with a required `fetcher function for executing GraphQL operations against your schema.
 
-Maintainers of this repository regulary review PRs and issues and help advance the GraphiQL roadmap
+For HTTP transport implementations, we recommend using the [fetch](https://fetch.spec.whatwg.org/) standard API, but you can use anything that matches [the type signature](https://graphiql-test.netlify.app/typedoc/modules/graphiql-toolkit.html#fetcher), including async iterables and observables.
 
-### Alumni
+You can also install `@graphiql/create-fetcher` to make it easier to create a simple fetcher for conventional http and websockets transports.
 
-Originally this was three seperate repositories
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-- [@leebyron](https://github.com/leebyron) - original author of all libraries
-- [@asiandrummer](https://github.com/asiandrummer) - original creator of GraphiQL
-- [@wincent](https://github.com/wincent) - early co-author and maintainer
-- [@lostplan](https://github.com/lostplan) - maintained the language service ecosystem until about 2017
-- [@IvanGoncharov](https://github.com/ivangoncharov) -
+import GraphiQL from 'graphiql';
+import { createGraphiQLFetcher } from '@graphiql/toolkit';
 
-### Active
+const fetcher = createGraphiQLFetcher({
+  url: window.location.origin + '/graphql',
+});
 
-- [@acao](https://github.com/acao)
-- [@imolorhe](https://github.com/imolorhe)
-- [@yoshiakis](https://github.com/yoshiakis)
+ReactDOM.render(
+  <GraphiQL fetcher={fetcher} editorTheme={'dracula'} />,
+  document.body,
+);
+```
 
-### Fielding Proposals!
+Read more about using [`createGraphiQLFetcher`](https://github.com/graphql/graphiql/tree/main/packages/graphiql-toolkit/docs/create-fetcher.md) in the readme to learn how to add headers and more.
 
-The door is open for proposals for the new GraphiQL Plugin API, and other ideas on how to make the rest of the IDE ecosystem more performant, scaleable, interoperable and extensible.
-Feel free to open a PR to create a document in the `/proposals/` directory.
-Eventually we hope to move these to a repo that serves this purpose.
+### Usage: UMD Bundle over CDN (Unpkg, JSDelivr, etc)
 
-## Community
+Don't forget to include the CSS file on the page! If you're using `npm` or `yarn`, you can find it in `node_modules/graphiql/graphiql.css`, or you can download it from the [releases page](https://github.com/graphql/graphiql/releases).
 
-- **Discord** [![Discord](https://img.shields.io/discord/586999333447270440.svg)](https://discord.gg/fHje6QG) - Most discussion outside of github happens on our [Discord Server](https://discord.gg/eNuu9Cb)
-- **Twitter** - [@GraphiQL](https://twitter.com/@GraphiQL) and [#GraphiQL](https://twitter.com/hashtag/GraphiQL)
-- **GitHub** - Create feature requests, discussions issues and bugs above
-- **Working Group** - Yes, you're invited! Monthly planning/decision making meetings, and working sessions every two weeks on zoom! [Learn more.](working-group#readme)
+For an example of setting up a GraphiQL, check out the [example](../examples/graphiql-cdn/) in this repository which also includes a few useful features highlighting GraphiQL's API.
+
+The most minimal way to set up GraphiQL is a single index.html file:
+
+```html
+<html>
+  <head>
+    <title>Simple GraphiQL Example</title>
+    <link href="https://unpkg.com/graphiql/graphiql.min.css" rel="stylesheet" />
+  </head>
+  <body style="margin: 0;">
+    <div id="graphiql" style="height: 100vh;"></div>
+
+    <script
+      crossorigin
+      src="https://unpkg.com/react/umd/react.production.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/graphiql/graphiql.min.js"
+    ></script>
+
+    <script>
+      const fetcher = GraphiQL.createFetcher('https://my/graphql');
+
+      ReactDOM.render(
+        React.createElement(GraphiQL, { fetcher: fetcher }),
+        document.getElementById('graphiql'),
+      );
+    </script>
+  </body>
+</html>
+```
+
+**Notes**:
+
+- the inlined styles are important for ensuring GraphiQL is visible and fills the canvas.
+- using `React.createElement` directly is belaborous, so follow the webpack instructions above for more highly customized implementation
+- we can use [`GraphiQL.createFetcher`](https://github.com/graphql/graphiql/tree/main/packages/graphiql-toolkit/docs/create-fetcher.md) in the UMD bundle only, so that it can be tree shaken out for modules
+
+### GraphiQL for my GraphQL Service/HTTP Server/Etc
+
+You may be using a runtime that already provides graphiql, or that provides it via a middleware. For example, we support [`express-graphql`](https://github.com/graphql/express-graphql)!
+
+I would suggest a search for "graphiql <my runtime>" such as "graphiql express", "graphiql absinthe", etc to learn a potentially simpler route to setup for your environment. There are many npm packages, ruby gems, java utilities for deploying graphiql.
+
+Here are some example searches:
+
+- https://www.npmjs.com/search?q=graphiql - ~117 hits
+- https://pypi.org/search/?q=graphiql - ~33 hits
+- https://search.maven.org/search?q=graphiql - ~15 hits
+- https://rubygems.org/search?utf8=%E2%9C%93&query=graphiql - ~6 hits
+- https://godoc.org/?q=graphiql - ~12 hits
+- https://packagist.org/?query=%22graphiql%22 - ~5 hits
+- https://crates.io/search?q=graphiql - ~2 hits
+
+This doesn't include runtimes or libraries where GraphiQL is used but isn't referenced in the package registry search entry.
+
+## Customize
+
+GraphiQL supports customization in UI and behavior by accepting React props and children.
+
+<span id="props"> </span>
+
+### Props
+
+`fetcher` is the only required prop for `<GraphiQL />`.
+
+For more details on props, see the [API Docs](https://graphiql-test.netlify.app/typedoc/modules/graphiql.html#graphiqlprops)
+
+| Prop                         | Type                                                                                                  | Description                                                                                                                                                                                     |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fetcher`                    | [`Fetcher function`](https://graphiql-test.netlify.app/typedoc/modules/graphiql-toolkit.html#fetcher) | **Required.** a function which accepts GraphQL-HTTP parameters and returns a Promise, Observable or AsyncIterable which resolves to the GraphQL parsed JSON response.                           |  |
+| `schema`                     | [`GraphQLSchema`](https://graphql.org/graphql-js/type/#graphqlschema)                                 | a GraphQLSchema instance or `null` if one is not to be used. If `undefined` is provided, GraphiQL will send an introspection query using the fetcher to produce a schema.                       |
+| `query`                      | `string` (GraphQL)                                                                                    | initial displayed query, if `undefined` is provided, the stored query or `defaultQuery` will be used. You can also set this value at runtime to override the current operation editor state.    |
+| `validationRules`            | `ValidationRule[]`                                                                                    | A array of validation rules that will be used for validating the GraphQL operations. If `undefined` is provided, the default rules (exported as `specifiedRules` from `graphql`) will be used.  |
+| `variables`                  | `string` (JSON)                                                                                       | initial displayed query variables, if `undefined` is provided, the stored variables will be used.                                                                                               |
+| `headers`                    | `string`                                                                                              | initial displayed request headers. if not defined, it will default to the stored headers if `shouldPersistHeaders` is enabled.                                                                  |
+| `externalFragments`          | `string \| FragmentDefinitionNode[]`                                                                  | provide fragments external to the operation for completion, validation, and for selective use when executing operations.                                                                        |
+| `operationName`              | `string`                                                                                              | an optional name of which GraphQL operation should be executed.                                                                                                                                 |
+| `response`                   | `string` (JSON)                                                                                       | an optional JSON string to use as the initial displayed response. If not provided, no response will be initially shown. You might provide this if illustrating the result of the initial query. |
+| `storage`                    | [`Storage`](https://graphiql-test.netlify.app/typedoc/interfaces/graphiql.storage.html)               | **Default:** `window.localStorage`. an interface that matches `window.localStorage` signature that GraphiQL will use to persist state.                                                          |
+| `defaultQuery`               | `string`                                                                                              | **Default:** graphiql help text. Provides default query if no user state is present.                                                                                                            | default graphiql help text |
+| `defaultVariableEditorOpen`  | `boolean`                                                                                             | sets whether or not to show the variables pane on startup. overridden by user state (**deprecated** in favor of `defaultSecondaryEditorOpen`)                                                   |
+| `defaultSecondaryEditorOpen` | `boolean`                                                                                             | sets whether or not to show the variables/headers pane on startup. If not defined, it will be based off whether or not variables and/or headers are present.                                    |
+| `getDefaultFieldNames`       | `Function`                                                                                            | **Default:** `defaultGetDefaultFieldNames`. provides default field values for incomplete queries                                                                                                | `defaultGetDefaultFieldNames` |
+| `editorTheme`                | `string`                                                                                              | **Default:** `graphiql`. names a CodeMirror theme to be applied to the `QueryEditor`, `ResultViewer`, and `Variables` panes. See below for full usage.                                          |
+| `readOnly`                   | `boolean`                                                                                             | when `true` will make the `QueryEditor` and `Variables` panes readOnly.                                                                                                                         |
+| `docExplorerOpen`            | `boolean`                                                                                             | when `true` will ensure the `DocExplorer` is open by default when the user first renders the component. Overridden by user's toggle state                                                       |
+| `headerEditorEnabled`        | `boolean`                                                                                             | **Default:** `false`. enables the header editor when `true`.                                                                                                                                    |
+| `shouldPersistHeaders`       | `boolean`                                                                                             | **Default:** `false`. o persist headers to storage when `true`                                                                                                                                  |
+| `toolbar.additionalContent`  | `React.Component[]`                                                                                   | pass additional toolbar react components inside a fragment                                                                                                                                      | `null` |
+| `onEditQuery`                | `Function`                                                                                            | called when the Query editor changes. The argument to the function will be the query string.                                                                                                    |
+| `onEditVariables`            | `Function`                                                                                            | called when the Query variable editor changes. The argument to the function will be the variables string.                                                                                       |
+| `onEditHeaders`              | `Function`                                                                                            | called when the request headers editor changes. The argument to the function will be the headers string.                                                                                        |
+| `onEditOperationName`        | `Function`                                                                                            | called when the operation name to be executed changes.                                                                                                                                          |
+| `onToggleDocs`               | `Function`                                                                                            | called when the docs will be toggled. The argument to the function will be a boolean whether the docs are now open or closed.                                                                   |
+
+### Children (this pattern will be dropped in 2.0.0)
+
+- `<GraphiQL.Logo>`: Replace the GraphiQL logo with your own.
+
+- `<GraphiQL.Toolbar>`: Add a custom toolbar above GraphiQL. If not provided, a
+  default toolbar may contain common operations. Pass the empty
+  `<GraphiQL.Toolbar />` if an empty toolbar is desired.
+
+- `<GraphiQL.Button>`: Add a button to the toolbar above GraphiQL.
+
+- `<GraphiQL.Menu>`: Add a dropdown menu to the toolbar above GraphiQL.
+
+  - `<GraphiQL.MenuItem>`: Items for a menu.
+
+- `<GraphiQL.Select>`: Add a select list to the toolbar above GraphiQL.
+
+  - `<GraphiQL.SelectOption>`: Options for a select list.
+
+- `<GraphiQL.Group>`: Add a group of associated controls to the
+  toolbar above GraphiQL. Expects children to be `<GraphiQL.Button>`,
+  `<GraphiQL.Menu>`, or `<GraphiQL.Select>`.
+
+- `<GraphiQL.Footer>`: Add a custom footer below GraphiQL Results.
+
+## Full Usage Example
+
+TODO: kitchen sink example project or codesandbox
+
+### Applying an Editor Theme
+
+In order to theme the editor portions of the interface, you can supply a `editorTheme` prop. You'll also need to load the appropriate CSS for the theme (similar to loading the CSS for this project). [See the themes available here](https://codemirror.net/demo/theme.html).
+
+```js
+// In your html
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.23.0/theme/solarized.css" />
+
+// In your GraphiQL JSX
+<GraphiQL
+  editorTheme="solarized light"
+/>
+```
+
+### Running Operations

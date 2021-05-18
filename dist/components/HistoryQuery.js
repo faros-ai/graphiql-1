@@ -7,8 +7,6 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -33,8 +31,7 @@ var HistoryQuery = (function (_super) {
         var _this = this;
         var _a;
         var displayName = this.props.label ||
-            this.props.operationName ||
-            ((_a = this.props.query) === null || _a === void 0 ? void 0 : _a.split('\n').filter(function (line) { return line.indexOf('#') !== 0; }).join(''));
+            this.props.operationName || ((_a = this.props.query) === null || _a === void 0 ? void 0 : _a.split('\n').filter(function (line) { return line.indexOf('#') !== 0; }).join(''));
         var starIcon = this.props.favorite ? '\u2605' : '\u2606';
         return (react_1.default.createElement("li", { className: this.state.editable ? 'editable' : undefined },
             this.state.editable ? (react_1.default.createElement("input", { type: "text", defaultValue: this.props.label, ref: function (c) {

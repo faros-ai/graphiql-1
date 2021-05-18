@@ -7,8 +7,6 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -41,10 +39,9 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spreadArray = (this && this.__spreadArray) || function (to, from) {
-    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-        to[j] = from[i];
-    return to;
+var __spread = (this && this.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
+    return ar;
 };
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -125,7 +122,7 @@ var QueryHistory = (function (_super) {
                 _this.favoriteStore.delete(item);
             }
             _this.setState({
-                queries: __spreadArray(__spreadArray([], __read(_this.historyStore.items)), __read(_this.favoriteStore.items)),
+                queries: __spread(_this.historyStore.items, _this.favoriteStore.items),
             });
         };
         _this.editLabel = function (query, variables, headers, operationName, label, favorite) {
@@ -143,7 +140,7 @@ var QueryHistory = (function (_super) {
                 _this.historyStore.edit(item);
             }
             _this.setState({
-                queries: __spreadArray(__spreadArray([], __read(_this.historyStore.items)), __read(_this.favoriteStore.items)),
+                queries: __spread(_this.historyStore.items, _this.favoriteStore.items),
             });
         };
         _this.historyStore = new QueryStore_1.default('queries', props.storage, MAX_HISTORY_LENGTH);

@@ -7,8 +7,6 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -48,8 +46,7 @@ var ExecuteButton = (function (_super) {
                 else {
                     document.removeEventListener('mouseup', onMouseUp);
                     onMouseUp = null;
-                    var isOptionsMenuClicked = upEvent.currentTarget &&
-                        ((_a = downTarget.parentNode) === null || _a === void 0 ? void 0 : _a.compareDocumentPosition(upEvent.currentTarget)) &&
+                    var isOptionsMenuClicked = upEvent.currentTarget && ((_a = downTarget.parentNode) === null || _a === void 0 ? void 0 : _a.compareDocumentPosition(upEvent.currentTarget)) &&
                         Node.DOCUMENT_POSITION_CONTAINED_BY;
                     if (!isOptionsMenuClicked) {
                         _this.setState({ optionsOpen: false });

@@ -37,10 +37,9 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spreadArray = (this && this.__spreadArray) || function (to, from) {
-    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-        to[j] = from[i];
-    return to;
+var __spread = (this && this.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
+    return ar;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.inlineRelevantFragmentSpreads = exports.uniqueBy = void 0;
@@ -60,7 +59,7 @@ function uniqueBy(array, iteratee) {
                     result.push(itemClone);
                 }
                 else if (existing && existing.selectionSet && item.selectionSet) {
-                    existing.selectionSet.selections = __spreadArray(__spreadArray([], __read(existing.selectionSet.selections)), __read(item.selectionSet.selections));
+                    existing.selectionSet.selections = __spread(existing.selectionSet.selections, item.selectionSet.selections);
                 }
                 else if (!existing) {
                     var itemClone = __assign({}, item);
@@ -121,7 +120,7 @@ function inlineRelevantFragmentSpreads(fragmentDefinitions, selections, selectio
                     ? selection.typeCondition.name.value
                     : null;
                 if (!fragmentTypeName || fragmentTypeName === selectionSetTypeName) {
-                    outputSelections.push.apply(outputSelections, __spreadArray([], __read(inlineRelevantFragmentSpreads(fragmentDefinitions, selection.selectionSet.selections, selectionSetType))));
+                    outputSelections.push.apply(outputSelections, __spread(inlineRelevantFragmentSpreads(fragmentDefinitions, selection.selectionSet.selections, selectionSetType)));
                     continue;
                 }
             }

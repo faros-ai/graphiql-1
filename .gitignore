@@ -13,7 +13,6 @@ packages/**/dist/.gitignore
 packages/**/dist/.npmignore
 packages/graphiql/storybook
 packages/graphiql/typedoc
-esm
 bundle
 cypress/screenshots
 node_modules/
@@ -29,16 +28,11 @@ yarn-1.18.0.js
 # Local Netlify folder
 .netlify
 
-esm/
 cdn/
 webpack/
 monaco/
 cdn.html
 analyzer.html
-/graphiql.*js
-/graphiql.*js.map
-/graphiql.*css
-/graphiql.*css.map
 example/yarn.lock
 example/graphiql.js
 example/graphiql.css

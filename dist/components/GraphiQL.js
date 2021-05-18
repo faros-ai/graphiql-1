@@ -7,8 +7,6 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -95,10 +93,9 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spreadArray = (this && this.__spreadArray) || function (to, from) {
-    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-        to[j] = from[i];
-    return to;
+var __spread = (this && this.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
+    return ar;
 };
 var __values = (this && this.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
@@ -212,10 +209,10 @@ var GraphiQL = (function (_super) {
                                     }
                                     if (maybeMultipart) {
                                         var payload = { data: fullResponse_1.data };
-                                        var maybeErrors = __spreadArray(__spreadArray([], __read(((fullResponse_1 === null || fullResponse_1 === void 0 ? void 0 : fullResponse_1.errors) || []))), __read(maybeMultipart
+                                        var maybeErrors = __spread(((fullResponse_1 === null || fullResponse_1 === void 0 ? void 0 : fullResponse_1.errors) || []), maybeMultipart
                                             .map(function (i) { return i.errors; })
                                             .flat()
-                                            .filter(Boolean)));
+                                            .filter(Boolean));
                                         if (maybeErrors.length) {
                                             payload.errors = maybeErrors;
                                         }
@@ -762,8 +759,7 @@ var GraphiQL = (function (_super) {
             react_1.default.createElement(ToolbarButton_1.ToolbarButton, { onClick: this.handleMergeQuery, title: "Merge Query (Shift-Ctrl-M)", label: "Merge" }),
             react_1.default.createElement(ToolbarButton_1.ToolbarButton, { onClick: this.handleCopyQuery, title: "Copy Query (Shift-Ctrl-C)", label: "Copy" }),
             react_1.default.createElement(ToolbarButton_1.ToolbarButton, { onClick: this.handleToggleHistory, title: "Show History", label: "History" }),
-            ((_a = this.props.toolbar) === null || _a === void 0 ? void 0 : _a.additionalContent)
-                ? this.props.toolbar.additionalContent
+            ((_a = this.props.toolbar) === null || _a === void 0 ? void 0 : _a.additionalContent) ? this.props.toolbar.additionalContent
                 : null));
         var footer = find_1.default(children, function (child) {
             return isChildComponentType(child, GraphiQL.Footer);

@@ -15,10 +15,9 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spreadArray = (this && this.__spreadArray) || function (to, from) {
-    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-        to[j] = from[i];
-    return to;
+var __spread = (this && this.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
+    return ar;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var QueryStore = (function () {
@@ -80,7 +79,7 @@ var QueryStore = (function () {
     };
     QueryStore.prototype.push = function (item) {
         var _a;
-        var items = __spreadArray(__spreadArray([], __read(this.items)), [item]);
+        var items = __spread(this.items, [item]);
         if (this.maxSize && items.length > this.maxSize) {
             items.shift();
         }

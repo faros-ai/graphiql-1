@@ -11,6 +11,7 @@ import React from 'react';
 
 import onHasCompletion from '../utility/onHasCompletion';
 import commonKeys from '../utility/commonKeys';
+import { jsonataMode } from '../utility/CodeMirrorJsonata';
 
 declare module CodeMirror {
   export interface Editor extends CM.Editor {}
@@ -67,6 +68,7 @@ export class JsonataEditor extends React.Component<JsonataEditorProps> {
     require('codemirror/addon/fold/foldgutter');
     require('codemirror/addon/search/searchcursor');
     require('codemirror/addon/search/jump-to-line');
+    jsonataMode(this.CodeMirror);
     require('codemirror/keymap/sublime');
 
     const editor = (this.editor = this.CodeMirror(this._node, {
@@ -74,6 +76,7 @@ export class JsonataEditor extends React.Component<JsonataEditorProps> {
       lineNumbers: true,
       tabSize: 2,
       theme: this.props.editorTheme || 'graphiql',
+      mode: 'jsonata',
       keyMap: 'sublime',
       showCursorWhenSelecting: true,
       readOnly: this.props.readOnly ? 'nocursor' : false,

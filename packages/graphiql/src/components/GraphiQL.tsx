@@ -25,6 +25,7 @@ import {
   DocumentNode,
 } from 'graphql';
 import copyToClipboard from 'copy-to-clipboard';
+import _jsonata from 'jsonata';
 import { getFragmentDependenciesForAST } from 'graphql-language-service-utils';
 
 import { ExecuteButton } from './ExecuteButton';
@@ -646,7 +647,7 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
                     this.jsonataEditorComponent = n;
                   }}
                   value={this.state.jsonata}
-                  onEdit={this.handleEditVariables}
+                  onEdit={this.handleEditJsonata}
                   onHintInformationRender={this.handleHintInformationRender}
                   onPrettifyQuery={this.handlePrettifyQuery}
                   onMergeQuery={this.handleMergeQuery}
@@ -687,6 +688,7 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
                   this.resultComponent = c;
                 }}
                 value={this.state.response}
+                jsonata={this.state.jsonata}
                 editorTheme={this.props.editorTheme}
                 ResultsTooltip={this.props.ResultsTooltip}
                 ImagePreview={ImagePreview}
@@ -1108,7 +1110,6 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
     // the current query from the editor.
     const editedQuery = this.autoCompleteLeafs() || this.state.query;
     const variables = this.state.variables;
-    const jsonata = this.state.jsonata;
     const headers = this.state.headers;
     const shouldPersistHeaders = this.state.shouldPersistHeaders;
     let operationName = this.state.operationName;
@@ -1132,7 +1133,6 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
         this._queryHistory.updateHistory(
           editedQuery,
           variables,
-          jsonata,
           headers,
           operationName,
         );
@@ -1393,6 +1393,14 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
   };
 
   handleEditJsonata = (value: string) => {
+    if (value) {
+      try {
+        _jsonata(value);
+      } catch (err) {
+        console.warn(err);
+        return;
+      }
+    }
     this.setState({ jsonata: value });
     debounce(500, () => this._storage.set('jsonata', value))();
     if (this.props.onEditJsonata) {

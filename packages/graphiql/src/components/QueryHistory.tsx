@@ -124,7 +124,6 @@ export class QueryHistory extends React.Component<
   updateHistory = (
     query?: string,
     variables?: string,
-    jsonata?: string,
     headers?: string,
     operationName?: string,
   ) => {

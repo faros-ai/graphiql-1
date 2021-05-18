@@ -7,6 +7,7 @@
 
 import React, { Component, FunctionComponent } from 'react';
 import type * as CM from 'codemirror';
+import jsonata from 'jsonata';
 import ReactDOM from 'react-dom';
 import commonKeys from '../utility/commonKeys';
 import { SizerComponent } from '../utility/CodeMirrorSizer';
@@ -15,6 +16,7 @@ import { ImagePreview as ImagePreviewComponent } from './ImagePreview';
 type ResultViewerProps = {
   value?: string;
   editorTheme?: string;
+  jsonata?: string;
   ResultsTooltip?: typeof Component | FunctionComponent;
   ImagePreview: typeof ImagePreviewComponent;
   registerRef: (node: HTMLElement) => void;
@@ -82,7 +84,7 @@ export class ResultViewer extends React.Component<ResultViewerProps, {}>
 
     this.viewer = CodeMirror(this._node, {
       lineWrapping: true,
-      value: this.props.value || '',
+      value: this.focusedValue(),
       readOnly: true,
       theme: this.props.editorTheme || 'graphiql',
       mode: 'graphql-results',
@@ -97,17 +99,35 @@ export class ResultViewer extends React.Component<ResultViewerProps, {}>
   }
 
   shouldComponentUpdate(nextProps: ResultViewerProps) {
-    return this.props.value !== nextProps.value;
+    return (
+      this.props.value !== nextProps.value ||
+      this.props.jsonata !== nextProps.jsonata
+    );
   }
 
   componentDidUpdate() {
     if (this.viewer) {
-      this.viewer.setValue(this.props.value || '');
+      this.viewer.setValue(this.focusedValue());
     }
   }
 
   componentWillUnmount() {
     this.viewer = null;
+  }
+
+  focusedValue() {
+    const value = this.props.value || '';
+    if (!value || !this.props.jsonata) {
+      return value;
+    }
+    try {
+      const raw = JSON.parse(value);
+      const focused = jsonata(this.props.jsonata).evaluate(raw);
+      return JSON.stringify({ data: focused }, null, 2);
+    } catch (err) {
+      console.warn(err);
+      return value;
+    }
   }
 
   render() {

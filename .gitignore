@@ -13,7 +13,6 @@ packages/**/dist/.gitignore
 packages/**/dist/.npmignore
 packages/graphiql/storybook
 packages/graphiql/typedoc
-dist
 esm
 bundle
 cypress/screenshots
@@ -30,7 +29,6 @@ yarn-1.18.0.js
 # Local Netlify folder
 .netlify
 
-dist/
 esm/
 cdn/
 webpack/

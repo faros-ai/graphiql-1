@@ -39,6 +39,7 @@ var ResultViewer = (function (_super) {
         require('codemirror/addon/search/jump-to-line');
         require('codemirror/keymap/sublime');
         require('codemirror-graphql/results/mode');
+        require('codemirror/mode/javascript/javascript');
         var Tooltip = this.props.ResultsTooltip;
         var ImagePreview = this.props.ImagePreview;
         if (Tooltip || ImagePreview) {
@@ -90,14 +91,17 @@ var ResultViewer = (function (_super) {
         this.viewer = null;
     };
     ResultViewer.prototype.focusedValue = function () {
+        var _a, _b;
         var value = this.props.value || '';
         if (!value || !this.props.jsonata) {
+            (_a = this.viewer) === null || _a === void 0 ? void 0 : _a.setOption('mode', 'graphql-results');
             return value;
         }
         try {
             var raw = JSON.parse(value);
             var focused = jsonata_1.default(this.props.jsonata).evaluate(raw);
-            return JSON.stringify(focused, null, 2);
+            (_b = this.viewer) === null || _b === void 0 ? void 0 : _b.setOption('mode', { name: "javascript", json: true });
+            return JSON.stringify(focused, null, 2) || '';
         }
         catch (err) {
             console.warn(err);

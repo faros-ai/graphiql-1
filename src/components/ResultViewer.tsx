@@ -49,6 +49,7 @@ export class ResultViewer extends React.Component<ResultViewerProps, {}>
     require('codemirror/addon/search/jump-to-line');
     require('codemirror/keymap/sublime');
     require('codemirror-graphql/results/mode');
+    require('codemirror/mode/javascript/javascript');
     const Tooltip = this.props.ResultsTooltip;
     const ImagePreview = this.props.ImagePreview;
 
@@ -118,12 +119,14 @@ export class ResultViewer extends React.Component<ResultViewerProps, {}>
   focusedValue() {
     const value = this.props.value || '';
     if (!value || !this.props.jsonata) {
+      this.viewer?.setOption('mode', 'graphql-results');
       return value;
     }
     try {
       const raw = JSON.parse(value);
       const focused = jsonata(this.props.jsonata).evaluate(raw);
-      return JSON.stringify({ data: focused }, null, 2);
+      this.viewer?.setOption('mode', { name: 'javascript', json: true });
+      return JSON.stringify(focused, null, 2) || '';
     } catch (err) {
       console.warn(err);
       return value;

@@ -123,7 +123,7 @@ export class ResultViewer extends React.Component<ResultViewerProps, {}>
     try {
       const raw = JSON.parse(value);
       const focused = jsonata(this.props.jsonata).evaluate(raw);
-      return JSON.stringify({ data: focused }, null, 2);
+      return JSON.stringify(focused, null, 2);
     } catch (err) {
       console.warn(err);
       return value;

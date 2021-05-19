@@ -97,7 +97,7 @@ var ResultViewer = (function (_super) {
         try {
             var raw = JSON.parse(value);
             var focused = jsonata_1.default(this.props.jsonata).evaluate(raw);
-            return JSON.stringify({ data: focused }, null, 2);
+            return JSON.stringify(focused, null, 2);
         }
         catch (err) {
             console.warn(err);

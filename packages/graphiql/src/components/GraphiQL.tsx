@@ -37,7 +37,7 @@ import { QueryEditor } from './QueryEditor';
 import { VariableEditor } from './VariableEditor';
 import { JsonataEditor } from './JsonataEditor';
 import { HeaderEditor } from './HeaderEditor';
-import { ResultViewer } from './ResultViewer';
+import { JsonataFunction, ResultViewer } from './ResultViewer';
 import { DocExplorer } from './DocExplorer';
 import { QueryHistory } from './QueryHistory';
 import CodeMirrorSizer from '../utility/CodeMirrorSizer';
@@ -127,6 +127,7 @@ export type GraphiQLProps = {
   readOnly?: boolean;
   docExplorerOpen?: boolean;
   toolbar?: GraphiQLToolbarConfig;
+  jsonataFunctions?: ReadonlyArray<JsonataFunction>;
 };
 
 export type GraphiQLState = {
@@ -689,6 +690,7 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
                 }}
                 value={this.state.response}
                 jsonata={this.state.jsonata}
+                jsonataFunctions={this.props.jsonataFunctions}
                 editorTheme={this.props.editorTheme}
                 ResultsTooltip={this.props.ResultsTooltip}
                 ImagePreview={ImagePreview}
@@ -1397,7 +1399,6 @@ export class GraphiQL extends React.Component<GraphiQLProps, GraphiQLState> {
       try {
         _jsonata(value);
       } catch (err) {
-        console.warn(err);
         return;
       }
     }

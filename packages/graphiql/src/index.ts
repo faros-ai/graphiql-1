@@ -52,3 +52,8 @@ export { getQueryFacts } from './utility/getQueryFacts';
 export { default as getSelectedOperationName } from './utility/getSelectedOperationName';
 export { default as onHasCompletion } from './utility/onHasCompletion';
 export { Storage } from './utility/StorageAPI';
+
+/**
+ * Faros
+ */
+export type { JsonataFunction } from './components/ResultViewer';

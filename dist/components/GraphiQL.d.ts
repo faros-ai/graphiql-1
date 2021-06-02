@@ -7,7 +7,7 @@ import { QueryEditor } from './QueryEditor';
 import { VariableEditor } from './VariableEditor';
 import { JsonataEditor } from './JsonataEditor';
 import { HeaderEditor } from './HeaderEditor';
-import { ResultViewer } from './ResultViewer';
+import { JsonataFunction, ResultViewer } from './ResultViewer';
 import { DocExplorer } from './DocExplorer';
 import { QueryHistory } from './QueryHistory';
 import CodeMirrorSizer from '../utility/CodeMirrorSizer';
@@ -50,6 +50,7 @@ export declare type GraphiQLProps = {
     readOnly?: boolean;
     docExplorerOpen?: boolean;
     toolbar?: GraphiQLToolbarConfig;
+    jsonataFunctions?: ReadonlyArray<JsonataFunction>;
 };
 export declare type GraphiQLState = {
     schema?: GraphQLSchema;

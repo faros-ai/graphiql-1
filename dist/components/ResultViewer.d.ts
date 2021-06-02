@@ -2,10 +2,16 @@ import React, { Component, FunctionComponent } from 'react';
 import type * as CM from 'codemirror';
 import { SizerComponent } from '../utility/CodeMirrorSizer';
 import { ImagePreview as ImagePreviewComponent } from './ImagePreview';
+export declare type JsonataFunction = {
+    name: string;
+    implementation: (...args: any[]) => any;
+    signature: string;
+};
 declare type ResultViewerProps = {
     value?: string;
     editorTheme?: string;
     jsonata?: string;
+    jsonataFunctions?: ReadonlyArray<JsonataFunction>;
     ResultsTooltip?: typeof Component | FunctionComponent;
     ImagePreview: typeof ImagePreviewComponent;
     registerRef: (node: HTMLElement) => void;

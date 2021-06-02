@@ -354,7 +354,6 @@ var GraphiQL = (function (_super) {
                     _jsonata(value);
                 }
                 catch (err) {
-                    console.warn(err);
                     return;
                 }
             }
@@ -842,7 +841,7 @@ var GraphiQL = (function (_super) {
                                 _this.resultViewerElement = n;
                             }, ref: function (c) {
                                 _this.resultComponent = c;
-                            }, value: this.state.response, jsonata: this.state.jsonata, editorTheme: this.props.editorTheme, ResultsTooltip: this.props.ResultsTooltip, ImagePreview: ImagePreview }),
+                            }, value: this.state.response, jsonata: this.state.jsonata, jsonataFunctions: this.props.jsonataFunctions, editorTheme: this.props.editorTheme, ResultsTooltip: this.props.ResultsTooltip, ImagePreview: ImagePreview }),
                         footer))),
             this.state.docExplorerOpen && (React.createElement("div", { className: docExplorerWrapClasses, style: docWrapStyle },
                 React.createElement("div", { className: "docExplorerResizer", onDoubleClick: this.handleDocsResetResize, onMouseDown: this.handleDocsResizeStart }),

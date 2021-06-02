@@ -360,7 +360,6 @@ var GraphiQL = (function (_super) {
                     jsonata_1.default(value);
                 }
                 catch (err) {
-                    console.warn(err);
                     return;
                 }
             }
@@ -848,7 +847,7 @@ var GraphiQL = (function (_super) {
                                 _this.resultViewerElement = n;
                             }, ref: function (c) {
                                 _this.resultComponent = c;
-                            }, value: this.state.response, jsonata: this.state.jsonata, editorTheme: this.props.editorTheme, ResultsTooltip: this.props.ResultsTooltip, ImagePreview: ImagePreview_1.ImagePreview }),
+                            }, value: this.state.response, jsonata: this.state.jsonata, jsonataFunctions: this.props.jsonataFunctions, editorTheme: this.props.editorTheme, ResultsTooltip: this.props.ResultsTooltip, ImagePreview: ImagePreview_1.ImagePreview }),
                         footer))),
             this.state.docExplorerOpen && (react_1.default.createElement("div", { className: docExplorerWrapClasses, style: docWrapStyle },
                 react_1.default.createElement("div", { className: "docExplorerResizer", onDoubleClick: this.handleDocsResetResize, onMouseDown: this.handleDocsResizeStart }),

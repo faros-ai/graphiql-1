@@ -13,10 +13,17 @@ import commonKeys from '../utility/commonKeys';
 import { SizerComponent } from '../utility/CodeMirrorSizer';
 import { ImagePreview as ImagePreviewComponent } from './ImagePreview';
 
+export type JsonataFunction = {
+  name: string;
+  implementation: (...args: any[]) => any;
+  signature: string;
+};
+
 type ResultViewerProps = {
   value?: string;
   editorTheme?: string;
   jsonata?: string;
+  jsonataFunctions?: ReadonlyArray<JsonataFunction>;
   ResultsTooltip?: typeof Component | FunctionComponent;
   ImagePreview: typeof ImagePreviewComponent;
   registerRef: (node: HTMLElement) => void;
@@ -124,11 +131,21 @@ export class ResultViewer extends React.Component<ResultViewerProps, {}>
     }
     try {
       const raw = JSON.parse(value);
-      const focused = jsonata(this.props.jsonata).evaluate(raw);
+      const expression = jsonata(this.props.jsonata);
+      for (const f of this.props.jsonataFunctions ?? []) {
+        expression.registerFunction(f.name, f.implementation, f.signature);
+      }
+      const focused = expression.evaluate(raw);
       this.viewer?.setOption('mode', { name: 'javascript', json: true });
-      return JSON.stringify(focused, null, 2) || '';
+      return JSON.stringify(focused, null, 2) ?? '';
     } catch (err) {
-      console.warn(err);
+      if (err.code) {
+        return JSON.stringify(
+          { jsonataError: { ...err, stack: undefined } },
+          null,
+          2,
+        );
+      }
       return value;
     }
   }
